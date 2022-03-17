@@ -4,7 +4,8 @@ public class Doctor extends Profession {
 
     private boolean medDiplom;
 
-    public Doctor() {}
+    public Doctor() {
+    }
 
     public Doctor(boolean medDiplom, String name, String surname, String education, String birthday) {
         super(name, surname, education, birthday);
