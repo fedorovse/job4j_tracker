@@ -15,4 +15,34 @@ public class StartUITest {
         Item expected = new Item("Fix PC");
         assertThat(created.getName(), is(expected.getName()));
     }
+
+    @Test
+    public void whenEditItemTrue() {
+        Tracker tracker = new Tracker();
+        Item item = new Item("new Item");
+        tracker.add(item);
+        String[] answers = {
+                String.valueOf(item.getId()),
+                "edited Item"
+        };
+        Input input = new StubInput(answers);
+        StartUI.editItem(input, tracker);
+        Item expected = tracker.findById(item.getId());
+        assertThat(expected.getName(), is("edited Item"));
+    }
+
+    @Test
+    public void whenEditItemFalse() {
+        Tracker tracker = new Tracker();
+        Item item = new Item("new Item");
+        tracker.add(item);
+        String[] answers = {
+                String.valueOf(item.getId() + 1),
+                "edited Item"
+        };
+        Input input = new StubInput(answers);
+        StartUI.editItem(input, tracker);
+        Item expected = tracker.findById(item.getId());
+        assertThat(expected.getName(), is("new Item"));
+    }
 }
