@@ -1,16 +1,19 @@
 package ru.job4j.tracker;
 
 import static org.hamcrest.MatcherAssert.*;
+
+import org.junit.Ignore;
 import org.junit.Test;
 import static org.hamcrest.core.Is.is;
 
 public class StartUITest {
+
     @Test
     public void whenAddItem() {
         String[] answers = {"Fix PC"};
         Input input = new StubInput(answers);
         Tracker tracker = new Tracker();
-        StartUI.createItem(input, tracker);
+        new CreateAction().execute(input, tracker);
         Item created = tracker.findAll()[0];
         Item expected = new Item("Fix PC");
         assertThat(created.getName(), is(expected.getName()));
@@ -26,7 +29,7 @@ public class StartUITest {
                 "edited Item"
         };
         Input input = new StubInput(answers);
-        StartUI.editItem(input, tracker);
+        new EditAction().execute(input, tracker);
         Item expected = tracker.findById(item.getId());
         assertThat(expected.getName(), is("edited Item"));
     }
@@ -41,7 +44,7 @@ public class StartUITest {
                 "edited Item"
         };
         Input input = new StubInput(answers);
-        StartUI.editItem(input, tracker);
+        new EditAction().execute(input, tracker);
         Item expected = tracker.findById(item.getId());
         assertThat(expected.getName(), is("new Item"));
     }
