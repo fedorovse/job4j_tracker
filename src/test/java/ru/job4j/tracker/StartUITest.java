@@ -4,9 +4,6 @@ import static org.hamcrest.MatcherAssert.*;
 
 import org.junit.Test;
 
-import java.util.SplittableRandom;
-
-import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.core.Is.is;
 
 public class StartUITest {
@@ -50,7 +47,8 @@ public class StartUITest {
                         + "Menu:" + ln
                         + "0. Edit item" + ln
                         + "1. Exit Program" + ln
-        ));
+                )
+        );
     }
 
     @Test
@@ -61,7 +59,7 @@ public class StartUITest {
         Input in = new StubInput(
                 new String[]{"0", String.valueOf(one.getId()), "1"}
         );
-        UserAction[] actions = new UserAction[]{
+        UserAction[] actions = new UserAction[] {
                 new FindByIdAction(out),
                 new ExitAction()
         };
