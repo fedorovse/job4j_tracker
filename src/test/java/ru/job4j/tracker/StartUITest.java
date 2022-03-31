@@ -228,4 +228,21 @@ public class StartUITest {
                         + "0. Exit Program" + ln
         ));
     }
+
+    @Test
+    public void whenStringInsteadOfInt() {
+        Output out = new StubOutput();
+        Tracker tracker = new Tracker();
+        Input in = new ValidInput(new StubInput(new String[]{"vv", "0"}), out);
+        UserAction[] actions = new UserAction[]{
+                new ExitAction()
+        };
+        new StartUI(out).init(in, tracker, actions);
+        String ln = System.lineSeparator();
+        assertThat(out.toString(), is(
+                "Menu:" + ln
+                        + "0. Exit Program" + ln
+                        + "Пожалуйста, введите корректные данные" + ln
+        ));
+    }
 }
