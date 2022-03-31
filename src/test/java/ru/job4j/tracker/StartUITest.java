@@ -233,7 +233,7 @@ public class StartUITest {
     public void whenStringInsteadOfInt() {
         Output out = new StubOutput();
         Tracker tracker = new Tracker();
-        Input in = new ValidInput(new StubInput(new String[]{"vv", "0"}), out);
+        Input in = new ValidateInput(new StubInput(new String[]{"vv", "0"}), out);
         UserAction[] actions = new UserAction[]{
                 new ExitAction()
         };
@@ -244,5 +244,39 @@ public class StartUITest {
                         + "0. Exit Program" + ln
                         + "Пожалуйста, введите корректные данные" + ln
         ));
+    }
+
+    @Test
+    public void whenInvalidInput() {
+        Output out = new StubOutput();
+        Input in = new StubInput(
+                new String[] {"one", "1"}
+        );
+        ValidateInput input = new ValidateInput(in, out);
+        int selected = input.askInt("Enter menu:");
+        assertThat(selected, is(1));
+    }
+
+    @Test
+    public void whenValidInputNumbers() {
+        Output out = new StubOutput();
+        String[] numbers = new String[] {"0", "1", "2", "3", "4", "5", "6"};
+        Input in = new StubInput(numbers);
+        ValidateInput input = new ValidateInput(in, out);
+        for (int i = 0; i < numbers.length; i++) {
+            int selected = input.askInt("Enter menu:");
+            assertThat(selected, is(i));
+        }
+    }
+
+    @Test
+    public void whenNegativeNumberInput() {
+        Output out = new StubOutput();
+        Input in = new StubInput(
+                new String[] {"-5"}
+        );
+        ValidateInput input = new ValidateInput(in, out);
+        int selected = input.askInt("Enter menu:");
+        assertThat(selected, is(-5));
     }
 }
