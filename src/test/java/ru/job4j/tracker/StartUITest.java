@@ -11,7 +11,7 @@ public class StartUITest {
     @Test
     public void whenExit() {
         Output out = new StubOutput();
-        Input in = new StubInput(new String[] {"0"});
+        Input in = new StubInput(new String[]{"0"});
         Tracker tracker = new Tracker();
         UserAction[] actions = {
                 new ExitAction()
@@ -39,14 +39,14 @@ public class StartUITest {
         new StartUI(out).init(in, tracker, actions);
         String ln = System.lineSeparator();
         assertThat(out.toString(), is(
-                "Menu:" + ln
-                        + "0. Edit item" + ln
-                        + "1. Exit Program" + ln
-                        + "=== Replace item ===" + ln
-                        + "Заявка заменена" + ln
-                        + "Menu:" + ln
-                        + "0. Edit item" + ln
-                        + "1. Exit Program" + ln
+                        "Menu:" + ln
+                                + "0. Edit item" + ln
+                                + "1. Exit Program" + ln
+                                + "=== Replace item ===" + ln
+                                + "Заявка заменена" + ln
+                                + "Menu:" + ln
+                                + "0. Edit item" + ln
+                                + "1. Exit Program" + ln
                 )
         );
     }
@@ -59,7 +59,7 @@ public class StartUITest {
         Input in = new StubInput(
                 new String[]{"0", String.valueOf(one.getId()), "1"}
         );
-        UserAction[] actions = new UserAction[] {
+        UserAction[] actions = new UserAction[]{
                 new FindByIdAction(out),
                 new ExitAction()
         };
@@ -205,6 +205,27 @@ public class StartUITest {
                         + "Menu:" + ln
                         + "0. Show all items" + ln
                         + "1. Exit Program" + ln
+        ));
+    }
+
+    @Test
+    public void whenInvalidExit() {
+        Output out = new StubOutput();
+        Tracker tracker = new Tracker();
+        Input in = new StubInput(
+                new String[]{"1", "0"}
+        );
+        UserAction[] actions = new UserAction[]{
+                new ExitAction()
+        };
+        new StartUI(out).init(in, tracker, actions);
+        String ln = System.lineSeparator();
+        assertThat(out.toString(), is(
+                "Menu:" + ln
+                        + "0. Exit Program" + ln
+                        + "Некорректный ввод. Введите номер пункта меню от 0 до 0" + ln
+                        + "Menu:" + ln
+                        + "0. Exit Program" + ln
         ));
     }
 }

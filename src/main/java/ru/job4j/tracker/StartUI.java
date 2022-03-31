@@ -13,7 +13,7 @@ public class StartUI {
             this.showMenu(actions);
             int select = input.askInt("Select: ");
             if (select < 0 || select >= actions.length) {
-                System.out.println("Некорректный ввод. Введите номер пункта меню от 0 до " + (actions.length - 1));
+                out.println("Некорректный ввод. Введите номер пункта меню от 0 до " + (actions.length - 1));
                 continue;
             }
             UserAction action = actions[select];
