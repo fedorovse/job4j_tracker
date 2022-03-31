@@ -12,6 +12,10 @@ public class StartUI {
         while (run) {
             this.showMenu(actions);
             int select = input.askInt("Select: ");
+            if (select < 0 || select >= actions.length) {
+                System.out.println("Некорректный ввод. Введите номер пункта меню от 0 до " + (actions.length - 1));
+                continue;
+            }
             UserAction action = actions[select];
             run = action.execute(input, tracker);
         }
@@ -26,7 +30,7 @@ public class StartUI {
 
     public static void main(String[] args) {
         Output output = new ConsoleOutput();
-        Input input = new ConsoleInput();
+        Input input = new ValidInput();
         Tracker tracker = new Tracker();
         UserAction[] actions = {new CreateAction(output),
                 new ShowAllAction(output),
