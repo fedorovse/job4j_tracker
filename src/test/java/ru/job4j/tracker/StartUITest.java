@@ -263,10 +263,20 @@ public class StartUITest {
         String[] numbers = new String[] {"0", "1", "2", "3", "4", "5", "6"};
         Input in = new StubInput(numbers);
         ValidateInput input = new ValidateInput(in, out);
-        for (int i = 0; i < numbers.length; i++) {
-            int selected = input.askInt("Enter menu:");
-            assertThat(selected, is(i));
-        }
+        int selected = input.askInt("Enter menu:");
+        assertThat(selected, is(0));
+        selected = input.askInt("Enter menu:");
+        assertThat(selected, is(1));
+        selected = input.askInt("Enter menu:");
+        assertThat(selected, is(2));
+        selected = input.askInt("Enter menu:");
+        assertThat(selected, is(3));
+        selected = input.askInt("Enter menu:");
+        assertThat(selected, is(4));
+        selected = input.askInt("Enter menu:");
+        assertThat(selected, is(5));
+        selected = input.askInt("Enter menu:");
+        assertThat(selected, is(6));
     }
 
     @Test
