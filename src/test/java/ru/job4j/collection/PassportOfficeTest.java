@@ -4,6 +4,8 @@ import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class PassportOfficeTest {
 
@@ -20,8 +22,7 @@ public class PassportOfficeTest {
         Citizen citizen = new Citizen("2f44a", "Petr Arsentev");
         PassportOffice office = new PassportOffice();
         boolean result = office.add(citizen);
-        boolean expected = true;
-        assertThat(result, is(expected));
+        assertTrue(result);
     }
 
     @Test
@@ -31,7 +32,6 @@ public class PassportOfficeTest {
         PassportOffice office = new PassportOffice();
         office.add(citizen);
         boolean result = office.add(citizen2);
-        boolean expected = false;
-        assertThat(result, is(expected));
+        assertFalse(result);
     }
 }
