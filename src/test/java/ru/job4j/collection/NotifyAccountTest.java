@@ -25,4 +25,46 @@ public class NotifyAccountTest {
         );
         assertThat(NotifyAccount.sent(accounts), is(expect));
     }
+
+    @Test
+    public void whenAddAccountsWithEqualPassport() {
+        List<Account> accounts = Arrays.asList(
+                new Account("123", "Petr Arsentev", "eDer3432f"),
+                new Account("123", "Sergey", "10000000")
+        );
+        HashSet<Account> expect = new HashSet<>(
+                Arrays.asList(
+                        new Account("123", "Petr Arsentev", "eDer3432f")
+                )
+        );
+        assertThat(NotifyAccount.sent(accounts), is(expect));
+    }
+
+    @Test
+    public void whenAddAccountsWithEqualPassportAndName() {
+        List<Account> accounts = Arrays.asList(
+                new Account("123", "Petr Arsentev", "eDer3432f"),
+                new Account("123", "Petr Arsentev", "10000000")
+        );
+        HashSet<Account> expect = new HashSet<>(
+                Arrays.asList(
+                        new Account("123", "Petr Arsentev", "eDer3432f")
+                )
+        );
+        assertThat(NotifyAccount.sent(accounts), is(expect));
+    }
+
+    @Test
+    public void whenAddAccountsWithEqualPassportAndDeposit() {
+        List<Account> accounts = Arrays.asList(
+                new Account("123", "Petr Arsentev", "eDer3432f"),
+                new Account("123", "Sergey", "eDer3432f")
+        );
+        HashSet<Account> expect = new HashSet<>(
+                Arrays.asList(
+                        new Account("123", "Petr Arsentev", "eDer3432f")
+                )
+        );
+        assertThat(NotifyAccount.sent(accounts), is(expect));
+    }
 }
