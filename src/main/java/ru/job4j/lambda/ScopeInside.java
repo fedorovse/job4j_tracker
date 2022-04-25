@@ -3,13 +3,14 @@ package ru.job4j.lambda;
 import java.util.function.Supplier;
 
 public class ScopeInside {
-    private static int total = 0;
-
     public static void main(String[] args) {
         int[] number = {1, 2, 3};
-        for (int num : number) {
+        int total = 0;
+        for (int i = 0; i < number.length; i++) {
+            int num = number[i];
+            int summ = total;
             total = add(
-                    () -> total + num
+                    () -> summ + num
             );
         }
         System.out.println(total);
