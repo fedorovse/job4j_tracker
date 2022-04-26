@@ -2,14 +2,16 @@ package ru.job4j.stream;
 
 import java.util.Objects;
 
+/**
+ * Этот класс модель данных. Используется для хранения адреса клиента турфирмы
+ */
 public class Address {
-
+    /**
+     * city - String, город проживания
+     */
     private String city;
-
     private String street;
-
     private int home;
-
     private int apartment;
 
     public Address(String city, String street, int home, int apartment) {
@@ -17,6 +19,10 @@ public class Address {
         this.street = street;
         this.home = home;
         this.apartment = apartment;
+    }
+
+    public String getCity() {
+        return city;
     }
 
     @Override
