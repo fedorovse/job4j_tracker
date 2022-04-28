@@ -44,7 +44,6 @@ public class BankService {
                 .stream()
                 .filter(x -> x.getPassport().equals(passport))
                 .findFirst();
-//                .orElse(null);
     }
 
     /**
