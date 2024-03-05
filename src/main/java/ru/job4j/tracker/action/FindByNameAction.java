@@ -7,29 +7,30 @@ import ru.job4j.tracker.output.Output;
 
 import java.util.List;
 
-public class ShowAll implements UserAction {
+public class FindByNameAction implements UserAction {
 
     private final Output out;
 
-    public ShowAll(Output out) {
+    public FindByNameAction(Output out) {
         this.out = out;
     }
 
     @Override
     public String name() {
-        return "Show all items";
+        return "Find items by name";
     }
 
     @Override
     public boolean execute(Input input, Tracker tracker) {
-        out.println("=== Show all items ===");
-        List<Item> items = tracker.findAll();
-        if (items.size() == 0) {
-            out.println("В хранилище пока нет заявок");
-        } else {
+        out.println("=== Find items by name ===");
+        String name = input.askStr("Enter name: ");
+        List<Item> items = tracker.findByName(name);
+        if (items.size() > 0) {
             for (Item i: items) {
                 out.println(i);
             }
+        } else {
+            out.println("Заявки с именем: " + name + " не найдены");
         }
         return true;
     }

@@ -5,9 +5,10 @@ import static org.hamcrest.MatcherAssert.*;
 import org.junit.Test;
 import ru.job4j.tracker.action.*;
 import ru.job4j.tracker.input.Input;
-import ru.job4j.tracker.input.Validate;
+import ru.job4j.tracker.input.StubInput;
+import ru.job4j.tracker.input.ValidateInput;
 import ru.job4j.tracker.output.Output;
-import ru.job4j.tracker.output.Stub;
+import ru.job4j.tracker.output.StubOutput;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,11 +20,11 @@ public class StartUITest {
 
     @Test
     public void whenExit() {
-        Output out = new Stub();
-        Input in = new ru.job4j.tracker.input.Stub(new String[]{"0"});
+        Output out = new StubOutput();
+        Input in = new StubInput(new String[]{"0"});
         Tracker tracker = new Tracker();
         List<UserAction> actions = new ArrayList<>();
-        actions.add(new Exit());
+        actions.add(new ExitAction());
         new StartUI(out).init(in, tracker, actions);
         assertThat(out.toString(), is(
                 "Menu:" + System.lineSeparator()
@@ -33,14 +34,14 @@ public class StartUITest {
 
     @Test
     public void whenReplaceItemTestOutputIsSuccessfully() {
-        Output out = new Stub();
+        Output out = new StubOutput();
         Tracker tracker = new Tracker();
         Item one = tracker.add(new Item("test1"));
         String replaceName = "New Test Name";
-        Input in = new ru.job4j.tracker.input.Stub(
+        Input in = new StubInput(
                 new String[]{"0", String.valueOf(one.getId()), replaceName, "1"}
         );
-        List<UserAction> actions = Arrays.asList(new Replace(out), new Exit());
+        List<UserAction> actions = Arrays.asList(new ReplaceAction(out), new ExitAction());
         new StartUI(out).init(in, tracker, actions);
         String ln = System.lineSeparator();
         assertThat(out.toString(), is(
@@ -58,13 +59,13 @@ public class StartUITest {
 
     @Test
     public void whenFindByIdIsSuccessfully() {
-        Output out = new Stub();
+        Output out = new StubOutput();
         Tracker tracker = new Tracker();
         Item one = tracker.add(new Item("test1"));
-        Input in = new ru.job4j.tracker.input.Stub(
+        Input in = new StubInput(
                 new String[]{"0", String.valueOf(one.getId()), "1"}
         );
-        List<UserAction> actions = Arrays.asList(new FindById(out), new Exit());
+        List<UserAction> actions = Arrays.asList(new FindByIdAction(out), new ExitAction());
         new StartUI(out).init(in, tracker, actions);
         String ln = System.lineSeparator();
         assertThat(out.toString(), is(
@@ -81,13 +82,13 @@ public class StartUITest {
 
     @Test
     public void whenFindByIdIsFail() {
-        Output out = new Stub();
+        Output out = new StubOutput();
         Tracker tracker = new Tracker();
         Item one = tracker.add(new Item("test1"));
-        Input in = new ru.job4j.tracker.input.Stub(
+        Input in = new StubInput(
                 new String[]{"0", String.valueOf(one.getId() + 1), "1"}
         );
-        List<UserAction> actions = Arrays.asList(new FindById(out), new Exit());
+        List<UserAction> actions = Arrays.asList(new FindByIdAction(out), new ExitAction());
         new StartUI(out).init(in, tracker, actions);
         String ln = System.lineSeparator();
         assertThat(out.toString(), is(
@@ -104,13 +105,13 @@ public class StartUITest {
 
     @Test
     public void whenFindByNameIsSuccessfully() {
-        Output out = new Stub();
+        Output out = new StubOutput();
         Tracker tracker = new Tracker();
         Item one = tracker.add(new Item("test1"));
-        Input in = new ru.job4j.tracker.input.Stub(
+        Input in = new StubInput(
                 new String[]{"0", String.valueOf(one.getName()), "1"}
         );
-        List<UserAction> actions = Arrays.asList(new FindByName(out), new Exit());
+        List<UserAction> actions = Arrays.asList(new FindByNameAction(out), new ExitAction());
         new StartUI(out).init(in, tracker, actions);
         String ln = System.lineSeparator();
         assertThat(out.toString(), is(
@@ -127,13 +128,13 @@ public class StartUITest {
 
     @Test
     public void whenFindByNameIsFail() {
-        Output out = new Stub();
+        Output out = new StubOutput();
         Tracker tracker = new Tracker();
         Item one = tracker.add(new Item("test1"));
-        Input in = new ru.job4j.tracker.input.Stub(
+        Input in = new StubInput(
                 new String[]{"0", one.getName() + "g", "1"}
         );
-        List<UserAction> actions = Arrays.asList(new FindByName(out), new Exit());
+        List<UserAction> actions = Arrays.asList(new FindByNameAction(out), new ExitAction());
         new StartUI(out).init(in, tracker, actions);
         String ln = System.lineSeparator();
         assertThat(out.toString(), is(
@@ -150,14 +151,14 @@ public class StartUITest {
 
     @Test
     public void whenShowAllIsSuccessfully() {
-        Output out = new Stub();
+        Output out = new StubOutput();
         Tracker tracker = new Tracker();
         Item one = tracker.add(new Item("test1"));
         Item two = tracker.add(new Item("test2"));
-        Input in = new ru.job4j.tracker.input.Stub(
+        Input in = new StubInput(
                 new String[]{"0", "1"}
         );
-        List<UserAction> actions = Arrays.asList(new ShowAll(out), new Exit());
+        List<UserAction> actions = Arrays.asList(new ShowAllAction(out), new ExitAction());
         new StartUI(out).init(in, tracker, actions);
         String ln = System.lineSeparator();
         assertThat(out.toString(), is(
@@ -175,12 +176,12 @@ public class StartUITest {
 
     @Test
     public void whenShowAllIsFail() {
-        Output out = new Stub();
+        Output out = new StubOutput();
         Tracker tracker = new Tracker();
-        Input in = new ru.job4j.tracker.input.Stub(
+        Input in = new StubInput(
                 new String[]{"0", "1"}
         );
-        List<UserAction> actions = Arrays.asList(new ShowAll(out), new Exit());
+        List<UserAction> actions = Arrays.asList(new ShowAllAction(out), new ExitAction());
         new StartUI(out).init(in, tracker, actions);
         String ln = System.lineSeparator();
         assertThat(out.toString(), is(
@@ -197,13 +198,13 @@ public class StartUITest {
 
     @Test
     public void whenInvalidExit() {
-        Output out = new Stub();
+        Output out = new StubOutput();
         Tracker tracker = new Tracker();
-        Input in = new ru.job4j.tracker.input.Stub(
+        Input in = new StubInput(
                 new String[]{"1", "0"}
         );
         List<UserAction> actions = new ArrayList<>();
-        actions.add(new Exit());
+        actions.add(new ExitAction());
         new StartUI(out).init(in, tracker, actions);
         String ln = System.lineSeparator();
         assertThat(out.toString(), is(
@@ -217,11 +218,11 @@ public class StartUITest {
 
     @Test
     public void whenStringInsteadOfInt() {
-        Output out = new Stub();
+        Output out = new StubOutput();
         Tracker tracker = new Tracker();
-        Input in = new Validate(new ru.job4j.tracker.input.Stub(new String[]{"vv", "0"}), out);
+        Input in = new ValidateInput(new StubInput(new String[]{"vv", "0"}), out);
         List<UserAction> actions = new ArrayList<>();
-        actions.add(new Exit());
+        actions.add(new ExitAction());
         new StartUI(out).init(in, tracker, actions);
         String ln = System.lineSeparator();
         assertThat(out.toString(), is(
@@ -233,21 +234,21 @@ public class StartUITest {
 
     @Test
     public void whenInvalidInput() {
-        Output out = new Stub();
-        Input in = new ru.job4j.tracker.input.Stub(
+        Output out = new StubOutput();
+        Input in = new StubInput(
                 new String[] {"one", "1"}
         );
-        Validate input = new Validate(in, out);
+        ValidateInput input = new ValidateInput(in, out);
         int selected = input.askInt("Enter menu:");
         assertThat(selected, is(1));
     }
 
     @Test
     public void whenValidInputNumbers() {
-        Output out = new Stub();
+        Output out = new StubOutput();
         String[] numbers = new String[] {"0", "1", "2", "3", "4", "5", "6"};
-        Input in = new ru.job4j.tracker.input.Stub(numbers);
-        Validate input = new Validate(in, out);
+        Input in = new StubInput(numbers);
+        ValidateInput input = new ValidateInput(in, out);
         int selected = input.askInt("Enter menu:");
         assertThat(selected, is(0));
         selected = input.askInt("Enter menu:");
@@ -266,11 +267,11 @@ public class StartUITest {
 
     @Test
     public void whenNegativeNumberInput() {
-        Output out = new Stub();
-        Input in = new ru.job4j.tracker.input.Stub(
+        Output out = new StubOutput();
+        Input in = new StubInput(
                 new String[] {"-5"}
         );
-        Validate input = new Validate(in, out);
+        ValidateInput input = new ValidateInput(in, out);
         int selected = input.askInt("Enter menu:");
         assertThat(selected, is(-5));
     }
